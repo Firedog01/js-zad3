@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import * as _ from 'underscore';
 import { SearchBarComponent } from '../search-bar/search-bar.component';
+import { isEmpty } from 'underscore';
 
 @Component({
   selector: 'app-movies-table',
@@ -30,12 +31,13 @@ export class MoviesTableComponent implements OnInit {
     });
   }
   
-  @Input() search: SearchObj = {
-    title: null,
-    yearFrom: null,
-    yearTo: null,
-    cast: null
-  };
+  // @Input() search: SearchObj = {
+  //   title: null,
+  //   yearFrom: null,
+  //   yearTo: null,
+  //   cast: null
+  // };
+  @Input() search?: SearchObj;
   
   allMovies: Movie[] = [];
   
@@ -52,27 +54,35 @@ export class MoviesTableComponent implements OnInit {
   show() {
     let that = this;
     let movies: Movie[] = _.filter(this.allMovies, function(movie) {
-      if(that.search.yearFrom != null) {
-        if(movie.year < that.search.yearFrom) {
-          return false;
+      if(that.search != null) {
+        if(that.search.yearFrom != null) {
+          if(movie.year < that.search.yearFrom) {
+            return false;
+          }
+        }
+        if(that.search.yearTo != null) {
+          if(movie.year > that.search.yearTo) {
+            return false;
+          }
+        }
+        if(that.search.title != null) {
+          if(!movie.title.includes(that.search.title)) {
+            return false;
+          }
+        }
+        if(that.search.cast != null) {
+          if(!_.find(movie.cast, function(actor) { // powodzenia z ogarnięciem tego
+            if(that.search != null) {
+              if(that.search.cast != null) {
+                return actor.includes(that.search.cast);
+              }
+            }
+            return true;
+          })) {
+            return false;
+          }
         }
       }
-      if(that.search.yearTo != null) {
-        if(movie.year > that.search.yearTo) {
-          return false;
-        }
-      }
-      if(that.search.title != null) {
-        if(!movie.title.includes(that.search.title)) {
-          return false;
-        }
-      }
-      if(that.search.cast != null) {
-        if(!(that.search.cast in movie.cast)) {
-          return false;
-        }
-      }
-      
       return true;
     })
     this.displayedMovies = [];
