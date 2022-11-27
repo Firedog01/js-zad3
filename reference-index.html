@@ -1,0 +1,32 @@
+Wymagania do wariantu II
+
+    Zainstalować node.js i vue-cli
+    Utworzyć przy pomocy cli aplikację Vue
+    Dane filmów powinny być brane z pliku json dostępnego tutaj (należy go pobrać i dołączyć dane do aplikacji)
+
+    Utworzyć w aplikacji 4 komponenty dla:
+        wyszukiwarki
+        tabeli z filmami
+        listy filmów wg gatunków (dowolne 100 elementów z pliku json z filmami)
+        listy filmów wg obsady (dowolne 100 elementów z pliku json z filmami)
+
+    Strona powinna wyglądać identycznie jak ta z dołączonego do zadania pliku html, tylko powinna być zbudowana z komponentów Vue.
+
+    Filmy w tabeli powinny być wyświetlane w następujący sposób: po załadowaniu strony wyświetla się 10 filmów. Pod tabelą znajduje się przycisk "Pokaż więcej", który powoduje wyświetlenie kolejnych 10 wierszy (tabela wydłuża się za każdym kliknięciem)
+    Filtrowanie danych i przetwarzanie kolekcji powinno odbywać się z wykorzystaniem bibliotek Underscore lub Lodash.
+
+    UWAGA: Z racji tego, że aplikacja nie posiada backendu, należy wczytać cały plik z filmami ale wyświetlać w tabeli i na listach tylko dane wg wytycznych z punktów 4-6.
+
+    UWAGA: Komunikacja między komponentami może odbywać się w dowolny sposób dopuszczalny w Vue.js, np. przy pomocy zdarzeń.
+
+Wskazówka - Instalacja node.js i Vue
+
+    Pobierz i zainstaluj node.js. Instalacja polega na klikaniu
+    Z wiersza poleceń wykonaj npm install -g @vue/cli
+    Sprawdź, czy instalacja się powiodła vue --version
+    Utwórz folder na projekt i przejdź do tego folderu
+    Z wiersza poleceń wykonaj vue create hello-world. W tym przypadku hello-world jest nazwą projektu do utworzenia.
+    Zainstaluj Vue DevTools w przeglądarce
+    Uruchom projekt poleceniem npm run serve
+    W przeglądarce wpisz adres http://localhost:8080
+    Do edycji plików projektu wygodnie jest korzystać z narzędzia typu Visual Studio Code.
