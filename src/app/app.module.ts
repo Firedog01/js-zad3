@@ -7,6 +7,8 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
 import { MoviesTableComponent } from './movies-table/movies-table.component';
 import { MoviesByGenreComponent } from './movies-by-genre/movies-by-genre.component';
 import { MoviesByCastComponent } from './movies-by-cast/movies-by-cast.component';
+import { HttpClientModule } from  '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ import { MoviesByCastComponent } from './movies-by-cast/movies-by-cast.component
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

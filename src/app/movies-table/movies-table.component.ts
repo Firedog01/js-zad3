@@ -1,30 +1,91 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Injectable } from '@angular/core';
 import { Movie } from '../movie';
 import { SearchObj } from '../search-obj';
-import movies from '../../assets/movies.json';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import * as _ from 'underscore';
+import { SearchBarComponent } from '../search-bar/search-bar.component';
 
 @Component({
   selector: 'app-movies-table',
   templateUrl: './movies-table.component.html',
   styleUrls: ['./movies-table.component.css']
 })
+@Injectable({
+  providedIn: 'root'
+})
 export class MoviesTableComponent implements OnInit {
 
-  @Input() search?: SearchObj;
+  private _jsonURL = 'assets/movies.json';
   
-  allMovies: any = movies;
+  public getJSON(): Observable<any> {
+    return this.http.get(this._jsonURL);
+  }
+  
+  constructor(private http: HttpClient) {
+    this.getJSON().subscribe(data => {
+      this.allMovies = data;
+      this.show();
+      console.log(this.allMovies);
+    });
+  }
+  
+  @Input() search: SearchObj = {
+    title: null,
+    yearFrom: null,
+    yearTo: null,
+    cast: null
+  };
+  
+  allMovies: Movie[] = [];
   
   displayedMovies: Movie[] = [];
   
-  constructor() { }
+  displayedCount: number = 10;
+  
 
   onSearch() {
     console.log(this.search);
+    this.show();
+  }
+  
+  show() {
+    let that = this;
+    let movies: Movie[] = _.filter(this.allMovies, function(movie) {
+      if(that.search.yearFrom != null) {
+        if(movie.year < that.search.yearFrom) {
+          return false;
+        }
+      }
+      if(that.search.yearTo != null) {
+        if(movie.year > that.search.yearTo) {
+          return false;
+        }
+      }
+      if(that.search.title != null) {
+        if(!movie.title.includes(that.search.title)) {
+          return false;
+        }
+      }
+      if(that.search.cast != null) {
+        if(!(that.search.cast in movie.cast)) {
+          return false;
+        }
+      }
+      
+      return true;
+    })
+    this.displayedMovies = [];
+    for (let i = 0; i < this.displayedCount; i++) {
+      this.displayedMovies.push(movies[i]);
+    }
+  }
+  
+  onShowMore() {
+    this.displayedCount += 10;
+    this.show();
   }
   
   ngOnInit(): void {
-    for (let i = 0; i < 10; i++) {
-      this.displayedMovies.push(this.allMovies[i]);
-    }
   }
 }
