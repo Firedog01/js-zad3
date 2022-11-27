@@ -23,6 +23,5 @@
 	<input type="text" id="inputCast" [(ngModel)]="searchObj.cast"
 	class="form-control" placeholder="Imię i nazwisko"/>
 </div>
-<div class="form-group row">
-	<input type="button" class="btn btn-info col-sm-12" value="Szukaj" (click)="onSearch()"/>
-</div>
+
+<app-movies-table [search]="searchObj"></app-movies-table>
