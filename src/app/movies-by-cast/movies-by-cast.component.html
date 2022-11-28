@@ -1,5 +1,10 @@
 <h1>Filmy wg obsady</h1>
-<ol>
-	<li>Cheese Chasers</li>
-	<li>Southbound Duckling</li>
-</ol>
+
+<div *ngFor="let movies of displayedMovies | keyvalue">
+	<p>{{movies.key}}</p>
+	<ol>
+		<li *ngFor="let movie of movies.value">
+			{{movie.title}}
+		</li>
+	</ol>
+</div>
